@@ -4,10 +4,16 @@ import {loginData} from "../test-data/loginData";
 
 test.describe("Login Tests",()=>
 {
-    test("Standard User login",async ({page})=>
-    {
-        let loginPage = new LoginPage(page)
+    let loginPage: LoginPage
+    test.beforeEach(async ({page})=>{
+        loginPage = new LoginPage(page)
         await loginPage.visitPage()
+    })
+    test("Standard User login",async ()=>
+    {
         await loginPage.doLogin(loginData.validUser.username,loginData.validUser.password)
+    })
+    test("Invalid User login", async ()=>{
+        await loginPage.doLogin(loginData.wrongPassword.username,loginData.wrongPassword.password)
     })
 })
